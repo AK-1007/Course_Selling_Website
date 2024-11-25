@@ -1,32 +1,12 @@
 const express =require("express");
 const app=express();
+const {createCourseRoutes}=require("./Routes/course");
+const {createUserRoutes}=require("./Routes/user");
 
-app.post("/user/signup",(req,res)=>{
-    res.json({
-        message:"signup endpoint"
-    })
-})
-app.post("/user/login",(req,res)=>{
-    res.json({
-        message:"signup endpoint"
-    })
-})
+app.use("/user", userRouter);
+app.use("/course",courseRouter);
 
-app.get("/user/purchases",(req,res)=>{
-    res.json({
-        message:"signup endpoint"
-    })
-})
-app.post("/course/purchases",(req,res)=>{
-    res.json({
-        message:"signup endpoint"
-    })
-})
-app.get("/courses",(req,res)=>{
-    res.json({
-        message:"signup endpoint"
-    })
-})
+
 
 app.listen(3000)
 
