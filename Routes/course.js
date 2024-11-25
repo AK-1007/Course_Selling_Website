@@ -1,5 +1,6 @@
 const {courseRouter}=require("express")
 
+const courseRouter=Router();
     courseRouter.post("/purchases",(req,res)=>{
         res.json({
             message:"signup endpoint"
@@ -7,7 +8,7 @@ const {courseRouter}=require("express")
     })
     courseRouter.get("/preview",(req,res)=>{
         res.json({
-            message:"signup endpoint"
+            message:"Course Preview endpoint"
         })
     })
 
