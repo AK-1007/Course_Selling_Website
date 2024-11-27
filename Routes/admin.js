@@ -4,7 +4,7 @@ const adminRouter=Router();
 
 const { adminModel } =require("../db");
 const jwt=require("jsonwebtoken");
-const JWT_ADMIN_PASSWORD="ekgfs465@#";
+const {JWT_ADMIN_PASSWORD}=require("../config");
 
 adminRouter.post("/signup",async (req,res)=>{
     const { email , password , firstName , lastName} =req.body; // TODO include zod validation
@@ -46,9 +46,17 @@ adminRouter.post("/signin",async(req,res)=>{
         })
     }
 })
-adminRouter.post("/course/create",(req,res)=>{
+adminRouter.post("/course/create",async(req,res)=>{
+    const adminId=req.userId;
+    const {title,desciption,price,imageUrl }=re.body;
+
+    //TODO:creating a web3 saas in 6 hour which will show how to make user enter image instead of url
+    const course =await courseModel.create({
+        title,desciption,price,imageUrl,creatorId:adminId
+    })
     res.json({
-        message:"admin create endpoint"
+        message: "Course created",
+        courseId: admin._id
     })
 })
 adminRouter.put("/course/edit",(req,res)=>{
