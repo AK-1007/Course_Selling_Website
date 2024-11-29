@@ -2,7 +2,7 @@ const { Router }=require("express")
 
 const adminRouter=Router();
 
-const { adminModel } =require("../db");
+const { adminModel, courseModel } =require("../db");
 const jwt=require("jsonwebtoken");
 const {JWT_ADMIN_PASSWORD}=require("../config");
 
@@ -59,14 +59,33 @@ adminRouter.post("/course/create",async(req,res)=>{
         courseId: admin._id
     })
 })
-adminRouter.put("/course/edit",(req,res)=>{
+adminRouter.put("/course/edit",adminMiddleware,async(req,res)=>{
+    const adminId=req.userId;
+    const {title,desciption,price,imageUrl }=re.body;
+
+
+    // TODO: hashed password logic
+    const course=await courseModel.updateOne({ //either the user or undefined
+       _id: courseId,
+       creatorId: adminId
+    },{title,desciption,price,imageUrl,
+
+
+    })
     res.json({
-        message:"admin delete endpoint"
+        message: "course updated",
+        courseId: course._id
     })
 })
-adminRouter.get("/course/bulk",(req,res)=>{
+adminRouter.get("/course/bulk",adminMiddleware,async(req,res)=>{
+    const adminId=req.userId;
+
+    const courses =await courseModel.find({
+        creatorId: adminId
+    });
     res.json({
-        message:"admin:added a course "
+        message: "Course updated",
+        courses
     })
 })
 
